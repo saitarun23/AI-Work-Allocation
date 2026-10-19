@@ -1,0 +1,37 @@
+# Local settings for backend-service-app. Do NOT commit this file to Git.
+# Rules: no quotes around values, no spaces around "=", one setting per line.
+
+# ---------- Server ----------
+SERVER_PORT=8181
+
+# ---------- MySQL ----------
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=ai_work
+DB_TIMEZONE=Asia/Kolkata
+DB_USERNAME=root
+DB_PASSWORD=saivarun
+
+# ---------- Temporary dev login (Postman) until JWT login is built ----------
+DEV_USER=dev
+DEV_PASSWORD=change-this-dev-password
+
+# ---------- Swagger UI: true on your machine, false on a real server ----------
+SWAGGER_ENABLED=true
+
+# ====================================================================
+# LATER STAGES: uncomment together with the matching lines in application.properties
+# ====================================================================
+
+# ---------- Mail (notification stage) ----------
+#MAIL_HOST=smtp.gmail.com
+#MAIL_PORT=587
+#MAIL_USERNAME=
+#MAIL_PASSWORD=
+
+# ---------- JWT (login stage). Generate your own: openssl rand -base64 48 ----------
+#JWT_SECRET=
+#JWT_EXPIRATION_MS=86400000
+
+# ---------- Python AI service (agent stage) ----------
+#AI_SERVICE_URL=http://localhost:8000

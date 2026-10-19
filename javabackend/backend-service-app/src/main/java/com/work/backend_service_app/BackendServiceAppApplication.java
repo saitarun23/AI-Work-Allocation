@@ -8,6 +8,7 @@ public class BackendServiceAppApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendServiceAppApplication.class, args);
+		System.err.println("backend microservice up!  8181");
 	}
 
 }

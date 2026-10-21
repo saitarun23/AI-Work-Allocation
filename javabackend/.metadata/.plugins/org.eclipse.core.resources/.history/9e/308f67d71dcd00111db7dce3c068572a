@@ -1,0 +1,45 @@
+spring.application.name=backend-service-app
+server.port=${SERVER_PORT}
+
+# MySQL (values come from .env; the text after ":" is the default)
+spring.datasource.url=jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:ai_work}?createDatabaseIfNotExist=true&serverTimezone=${DB_TIMEZONE:Asia/Kolkata}
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD:}
+
+# JPA: Flyway owns the schema, Hibernate only validates
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.open-in-view=false
+spring.jpa.show-sql=true
+
+# Flyway (migration scripts go in src/main/resources/db/migration)
+spring.flyway.enabled=true
+
+# JWT (enable at the login stage, together with the JWT_* lines in .env)
+app.jwt.secret=${JWT_SECRET}
+app.jwt.expiration-ms=${JWT_EXPIRATION_MS}
+
+# Load local settings from the .env file in the project root (ignored if the file is missing)
+spring.config.import=optional:file:.env[.properties]
+
+# Actuator: expose only health and info
+management.endpoints.web.exposure.include=health,info
+
+# Swagger UI
+springdoc.api-docs.enabled=${SWAGGER_ENABLED:true}
+springdoc.swagger-ui.enabled=${SWAGGER_ENABLED:true}
+
+# TEMPORARY dev login for Postman until JWT login is built. Remove after that.
+spring.security.user.name=${DEV_USER:dev}
+spring.security.user.password=${DEV_PASSWORD:dev-change-me}
+
+# Mail (enable at the notification stage, together with the MAIL_* lines in .env)
+#spring.mail.host=${MAIL_HOST}
+#spring.mail.port=${MAIL_PORT:587}
+#spring.mail.username=${MAIL_USERNAME}
+#spring.mail.password=${MAIL_PASSWORD}
+#spring.mail.properties.mail.smtp.auth=true
+#spring.mail.properties.mail.smtp.starttls.enable=true
+
+
+# Python AI service (agent stage)
+#app.ai-service.url=${AI_SERVICE_URL:http://localhost:8000}

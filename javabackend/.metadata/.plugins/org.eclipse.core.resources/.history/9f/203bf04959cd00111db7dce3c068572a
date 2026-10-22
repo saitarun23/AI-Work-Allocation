@@ -1,0 +1,37 @@
+package backend.com.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import backend.com.entity.CapacityRule;
+
+import java.time.LocalDate;
+import java.util.List;
+
+public interface CapacityRuleRepository extends JpaRepository<CapacityRule, Long> {
+
+    /**
+     * Rules that apply on a date for one technology, complexity and level.
+     * Client-specific rules come first, then the default rules; within each group the latest start date wins.
+     * The caller uses the first row. Pass clientId = null to get default rules only.
+     */
+    @Query("""
+            select r from CapacityRule r
+            where r.technology.id = :technologyId
+              and r.complexity.id = :complexityId
+              and r.level.id = :levelId
+              and (r.client is null or r.client.id = :clientId)
+              and r.effectiveFrom <= :onDate
+              and (r.effectiveTo is null or r.effectiveTo >= :onDate)
+            order by case when r.client is null then 1 else 0 end, r.effectiveFrom desc
+            """)
+    List<CapacityRule> findApplicable(@Param("technologyId") Long technologyId,
+                                      @Param("complexityId") Long complexityId,
+                                      @Param("levelId") Long levelId,
+                                      @Param("clientId") Long clientId,
+                                      @Param("onDate") LocalDate onDate);
+
+    List<CapacityRule> findByTechnologyIdOrderByComplexityIdAscLevelIdAscEffectiveFromDesc(Long technologyId);
+}
+

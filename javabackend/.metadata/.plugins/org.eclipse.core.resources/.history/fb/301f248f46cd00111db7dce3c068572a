@@ -1,0 +1,17 @@
+package backend.com.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import backend.com.entity.Technology;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface TechnologyRepository extends JpaRepository<Technology, Long> {
+
+    Optional<Technology> findByCode(String code);
+
+    boolean existsByCode(String code);
+
+    List<Technology> findByActiveTrue();
+}
